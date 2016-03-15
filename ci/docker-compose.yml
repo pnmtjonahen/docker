@@ -1,8 +1,10 @@
 jenkins:
-  image: "jenkins"
+  image: "jenkins-ptj"
   ports:
    - "8081:8080"
    - "50000:50000"
+  links:
+   - sonarqube
   volumes_from:
    - jenkinsdata
 
