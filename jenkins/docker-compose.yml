@@ -1,0 +1,6 @@
+jenkins-ptj:
+  build: jenkins
+  ports:
+   - "8081:8080"
+   - "50000:50000"
+

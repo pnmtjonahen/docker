@@ -1,0 +1,4 @@
+maven-plugin:2.7.1
+git:2.4.2
+git-client:1.19.0
+scm-api:1.0
