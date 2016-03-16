@@ -12,6 +12,7 @@ jenkinsdata:
   image: "jenkins"
   volumes:
     - /var/jenkins_home
+    - /home/ordina/.m2:/var/jenkins_home/.m2
     - /home/ordina:/home/ordina
   command: /bin/true
 
