@@ -9,7 +9,7 @@ def desc = inst.getDescriptor("hudson.plugins.sonar.SonarPublisher")
 def sinst = new SonarInstallation(
   "sonarqube",
   false,
-  "http://sonarqube:9000",
+  "http://sonarqube.tjonahen.nl:9000",
   "",
   "",
   "",

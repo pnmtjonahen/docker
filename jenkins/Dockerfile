@@ -3,6 +3,10 @@
 # 
 FROM jenkins
 
+# set java home update jaxp properties to allow xsd from file system
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+COPY jaxp.properties $JAVA_HOME/jre/lib
+
 # copy additional configuration scripts
 COPY *.groovy /usr/share/jenkins/ref/init.groovy.d/
 
@@ -30,12 +34,9 @@ WORKDIR /usr/share
 
 RUN wget http://repo1.maven.org/maven2/org/codehaus/sonar/runner/sonar-runner-dist/${SONAR_RUNNER_VERSION}/${SONAR_RUNNER_PACKAGE} \
  && unzip sonar-runner-dist-${SONAR_RUNNER_VERSION}.zip \
- && rm ${SONAR_RUNNER_PACKAGE} \
- && mv /usr/share/sonar-runner-2.4 /usr/share/sonar-runner
+ && rm ${SONAR_RUNNER_PACKAGE} 
 
 USER jenkins
 # set maven home
 ENV MAVEN_HOME /usr/share/maven
 
-# set java home
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
