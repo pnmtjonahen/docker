@@ -11,14 +11,15 @@ All kind of docker files script and other related stuf
 docker-compose up -d
 ```
 
-  * Create user in mongo (if you log into the container then you dont have to install mongo locally)
+  * Create user in mongo
 
 ```bash
 docker exec -t -i mongodb bash
 ```
 
   * Run the following commands as shown below at mongodb command prompt
-        ```bash
+
+```bash
          $ mongo  
          MongoDB shell version: 3.0.4
          connecting to: test  
@@ -42,7 +43,7 @@ docker exec -t -i mongodb bash
                   }
                   ]
                 }  
-                ```
+```
   
 * http-server, Dockerfile to create a simple node based http-server, Use this as a base iage for static content server
   * docker build -t http-server .
