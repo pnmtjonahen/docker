@@ -76,6 +76,20 @@ hygieia-ui:
   links:
   - hygieia-api
   
+hygieia-github-scm-collector:
+  image: capitalone/hygieia-github-scm-collector:latest
+  container_name: hygieia-github
+  volumes:
+  - ./logs:/hygieia/logs
+  links:
+  - mongodb:mongo
+  - hygieia-api
+# place any values you want to change in docker-compose.override.yml
+#  environment:
+#  - GITHUB_HOST=github.com
+#  - GITHUB_CRON='0 0/5 * * * *'
+#  - GITHUB_COMMIT_THREASHOLD_DAYS=15  
+  
 hygieia-jenkins-build-collector:
   image: capitalone/hygieia-jenkins-build-collector:latest
   container_name: hygieia-jenkins-build
