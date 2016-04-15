@@ -46,11 +46,17 @@ docker exec -t -i mongodb bash
 ```
   
 * http-server, Dockerfile to create a simple node based http-server, Use this as a base iage for static content server
-  * docker build -t http-server .
+
+```bash
+ docker build -t tjonahen/http-server .
+```
 
 * jenkins, Dockerfile to create a jenkins environment with maven git and sonar-runner
-  * docker build -t jenkins-ptj
-  
+
+```bash
+  docker build -t tjonahen/jenkins .
+```
+
 * sonarqube, docker-compose.yml file to create a SonarQube with Progresql database
   * docker-compose up, to start the SonarQube application
   * docker-compose stop, to stop the application

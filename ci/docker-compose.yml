@@ -1,23 +1,36 @@
 jenkins:
-  image: "jenkins-ptj"
+  image: tjonahen/jenkins:latest
   ports:
    - "8081:8080"
    - "50000:50000"
   links:
    - sonarqube:sonarqube.tjonahen.nl
+   - nexus:nexus.tjonahen.nl
   volumes_from:
    - jenkinsdata
 
 jenkinsdata:
-  image: "jenkins"
+  image: tjonahen/jenkins:latest
   volumes:
     - /var/jenkins_home
-    - /home/ordina/.m2:/var/jenkins_home/.m2
     - /home/ordina:/home/ordina
+  command: chown -R jenkins:jenkins /var/jenkins_home/.m2
+
+nexus:
+  image: sonatype/nexus3:latest
+  ports:
+  - "8083:8081"
+  volumes_from:
+  - nexusdata
+ 
+nexusdata:
+  image: sonatype/nexus3:latest
+  volumes:
+  - /nexus-data
   command: /bin/true
 
 sonarqube:
-  image: "sonarqube:5.4"
+  image: sonarqube:5.4
   ports:
    - "9000:9000"
   links:
@@ -42,7 +55,7 @@ datadb:
   command: /bin/true
 
 plugins:
-  image: "sonarqube:5.4"
+  image: sonarqube:5.4
   volumes:
    - /opt/sonarqube/extensions
    - /opt/sonarqube/lib/bundled-plugins
@@ -50,7 +63,6 @@ plugins:
 
 mongodb:
   image: mongo:latest
-  container_name: mongodb
   command: mongod --smallfiles
   ports:
    - "27017:27017"
@@ -60,7 +72,6 @@ mongodb:
 
 hygieia-api:
   image: capitalone/hygieia-api:latest
-  container_name: hygieia-api
   ports:
   - "8082:8080"
   volumes:
@@ -70,15 +81,13 @@ hygieia-api:
 
 hygieia-ui:
   image: capitalone/hygieia-ui:latest
-  container_name: hygieia-ui
   ports:
   - "8088:80"
   links:
   - hygieia-api
-  
+
 hygieia-github-scm-collector:
   image: capitalone/hygieia-github-scm-collector:latest
-  container_name: hygieia-github
   volumes:
   - ./logs:/hygieia/logs
   links:
@@ -89,10 +98,9 @@ hygieia-github-scm-collector:
 #  - GITHUB_HOST=github.com
 #  - GITHUB_CRON='0 0/5 * * * *'
 #  - GITHUB_COMMIT_THREASHOLD_DAYS=15  
-  
+
 hygieia-jenkins-build-collector:
   image: capitalone/hygieia-jenkins-build-collector:latest
-  container_name: hygieia-jenkins-build
   volumes:
   - ./logs:/hygieia/logs
   links:
@@ -100,26 +108,15 @@ hygieia-jenkins-build-collector:
   - hygieia-api
   - jenkins
   environment:
-#Jenkins server (required) - Can provide multiple
   - JENKINS_MASTER=http://jenkins:8080
-#If using username/token for api authentication (required for Cloudbees Jenkins Ops Center) see sample
-#  - JENKINS_OP_CENTER=http://username:token@jenkins.company.com
-#Another option: If using same username/password Jenkins auth - set username/apiKey to use HTTP Basic Auth (blank=no auth)
-#  - JENKINS_USERNAME
-#  - JENKINS_API_KEY
-#  - JENKINS_CRON=0 0/5 * * * *
-#Determines if build console log is collected - defaults to false
-#  - JENKINS_SAVE_LOG=true
 
 hygieia-sonar-codequality-collector:
   image: capitalone/hygieia-sonar-codequality-collector:latest
-  container_name: hygieia-sonar-codequality
   volumes:
   - ./logs:/hygieia/logs
   links:
   - mongodb:mongo
   - hygieia-api
-  - sonarqube:sonarqube.tjonahen.nl
+  - sonarqube
   environment:
-#  - SONAR_CRON=0 0/5 * * * *
-  - SONAR_URL=http://sonarqube.tjonahen.nl:9000  
+  - SONAR_URL=http://sonarqube:9000
