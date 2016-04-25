@@ -1,3 +1,4 @@
 ci/logs
 hygieia/logs
 abk/
+derby/*.gz
