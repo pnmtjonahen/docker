@@ -53,7 +53,7 @@
     <hudson.tasks.Maven>
       <targets>sonar:sonar</targets>
       <mavenName>(Default)</mavenName>
-      <properties>sonar.host.url=http://sonarqube.tjonahen.nl:9000</properties>
+      <properties>sonar.host.url=http://sonarqube:9000</properties>
       <usePrivateRepository>false</usePrivateRepository>
       <settings class="jenkins.mvn.DefaultSettingsProvider"/>
       <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>

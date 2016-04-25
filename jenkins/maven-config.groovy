@@ -1,10 +1,14 @@
 import jenkins.model.*
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.io.File
 
-Files.createDirectory(Paths.get("/var/jenkins_home/.m2"));
+File f = new File("/var/jenkins_home/.m2");
+if (!f.exists()) {
+  Files.createDirectory(f.toPath());
+}
+println 'copy settings.xml to .m2 folder'
 Files.copy(Paths.get("/usr/share/jenkins/m2/settings.xml"), Paths.get("/var/jenkins_home/.m2/settings.xml"));
-
 
 a=Jenkins.instance.getExtensionList(hudson.tasks.Maven.DescriptorImpl.class)[0];
 b=(a.installations as List);

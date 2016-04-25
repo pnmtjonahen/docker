@@ -1,18 +1,19 @@
 FROM java:alpine
+MAINTAINER Philippe Tjon-A-Hen (philippe@tjonahen.nl)
 
 ENV DERBY_INSTALL=/db-derby-10.12.1.1-bin
 ENV DERBY_HOME=/db-derby-10.12.1.1-bin
 ENV CLASSPATH=/$DERBY_INSTALL/lib/derby.jar:$DERBY_INSTALL/lib/derbytools.jar:.
 
-COPY db-derby-10.12.1.1-bin.tar.gz db-derby-10.12.1.1-bin.tar.gz
 
-
-RUN \
+RUN apk add --update wget &&\
+  wget http://apache.mirror.iphh.net//db/derby/db-derby-10.12.1.1/db-derby-10.12.1.1-bin.tar.gz &&\ 
   tar xzf db-derby-10.12.1.1-bin.tar.gz &&\
   rm -Rf /db-derby-10.12.1.1-bin.tar.gz &&\
   mkdir -p /dbs &&\
   mkdir -p /dbbackup &&\
-  mkdir -p /upload 
+  mkdir -p /upload &&\
+  rm -rf /var/cache/apk/*
 
 VOLUME ["/dbs"]
 EXPOSE 1527
