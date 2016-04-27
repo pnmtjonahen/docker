@@ -1,3 +1,8 @@
+abk-client:
+  image: tjonahen/abk-client:latest
+  ports:
+  - "8088:80"
+
 abk-admin:
   image: tjonahen/abk-admin:latest
   ports:
