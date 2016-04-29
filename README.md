@@ -1,10 +1,17 @@
 Docker
 =======
 All kind of docker files script and other related stuf
+
+CI
+==
 * ci, continous integration
-  * docker-compose to start an ci build environment with jenkins, sonar and hygieia, tailored to run on my local environment. (aka not portable)
-  * some extra notes on hychieia, afther initial docker-compose up, or if you run the images standalone, the mongo database needs an database user. 
-  
+  * docker-compose to start an ci build environment with [jenkins](https://jenkins.io/), [sonar](http://www.sonarqube.org/), [Hygieia](https://github.com/capitalone/Hygieia), and [nexus](http://www.sonatype.org/nexus/).
+  * some extra notes on hychieia, afther initial docker-compose up, or if you run the images standalone, the mongo database needs an database user.
+
+CI-Hychieia
+==
+
+Adding a database user to the mongo database.
 * Bring up the container images
 
 ```bash
@@ -44,19 +51,22 @@ docker exec -t -i mongodb bash
                   ]
                 }  
 ```
-  
-* http-server, Dockerfile to create a simple node based http-server, Use this as a base iage for static content server
+http-server
+===
+* http-server, Dockerfile to create a simple node based http-server, Use this as a base image for static content server
 
 ```bash
  docker build -t tjonahen/http-server .
 ```
-
-* jenkins, Dockerfile to create a jenkins environment with maven git and sonar-runner
+Jenkins
+===
+* jenkins, Dockerfile to create a jenkins environment with maven, git, sonar-runner, and maven configured to use nexus.
 
 ```bash
   docker build -t tjonahen/jenkins .
 ```
-
+SonarQube
+===
 * sonarqube, docker-compose.yml file to create a SonarQube with Progresql database
   * docker-compose up, to start the SonarQube application
   * docker-compose stop, to stop the application
