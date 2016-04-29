@@ -6,14 +6,12 @@ ENV DERBY_HOME=/db-derby-10.12.1.1-bin
 ENV CLASSPATH=/$DERBY_INSTALL/lib/derby.jar:$DERBY_INSTALL/lib/derbytools.jar:.
 
 
-RUN apk add --update wget &&\
-  wget http://apache.mirror.iphh.net//db/derby/db-derby-10.12.1.1/db-derby-10.12.1.1-bin.tar.gz &&\ 
+RUN  wget http://apache.mirror.iphh.net//db/derby/db-derby-10.12.1.1/db-derby-10.12.1.1-bin.tar.gz &&\ 
   tar xzf db-derby-10.12.1.1-bin.tar.gz &&\
   rm -Rf /db-derby-10.12.1.1-bin.tar.gz &&\
   mkdir -p /dbs &&\
   mkdir -p /dbbackup &&\
-  mkdir -p /upload &&\
-  rm -rf /var/cache/apk/*
+  mkdir -p /upload 
 
 VOLUME ["/dbs"]
 EXPOSE 1527
