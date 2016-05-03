@@ -14,7 +14,7 @@ jenkinsdata:
   volumes:
     - /var/jenkins_home
     - /home/ordina:/home/ordina
-  command: chown -R jenkins:jenkins /var/jenkins_home/.m2
+  command: /bin/true
 
 nexus:
   image: sonatype/nexus3:latest

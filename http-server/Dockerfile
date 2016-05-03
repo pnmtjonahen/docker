@@ -6,4 +6,4 @@
 FROM node
 MAINTAINER Philippe Tjon-A-Hen <philippe@tjonahen.nl>
 RUN npm install http-server -g
-ENTRYPOINT http-server -p 80
+ENTRYPOINT http-server -p 80 -c300
