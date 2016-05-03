@@ -1,7 +1,7 @@
-# jenkins:latest
+# jenkins:1.651.1
 # maven:3.3.9
 # 
-FROM jenkins
+FROM jenkins:1.651.1
 
 # setup environment 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
