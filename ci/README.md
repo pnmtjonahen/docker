@@ -5,9 +5,22 @@ Docker/Docker-compose, jenkins config and other scripts to get a working "Ontwik
 
 CI
 ==
-* ci, continous integration
-  * docker-compose to start an ci build environment with [jenkins](https://jenkins.io/), [sonar](http://www.sonarqube.org/), [Hygieia](https://github.com/capitalone/Hygieia), and [nexus](http://www.sonatype.org/nexus/).
-  * some extra notes on hychieia, afther initial docker-compose up, or if you run the images standalone, the mongo database needs an database user.
+Continous Integration
+  * docker-compose to start an ci build environment with [jenkins](https://jenkins.io/), [sonar](http://www.sonarqube.org/), [Hygieia](https://github.com/capitalone/Hygieia), [nexus](http://www.sonatype.org/nexus/) and [Gogs](https://gogs.io/).
+
+Notes:  
+  * Hychieia, afther initial docker-compose up, or if you run the images standalone, the mongo database needs an database user.
+  * Gogs, configure gogs to use a postgresql database on host gogsdb with user gogs and password gogs.
+
+Urls
+==
+* jenkins http://localhost:8081
+* hygieia-api http://localhost:8082
+* nexus http://localhost:8083
+* gogs http://localhost:8084
+* hychieia-ui http://localhost:8085
+* sonar http://localhost:9000
+
 
 CI-Hychieia
 ==

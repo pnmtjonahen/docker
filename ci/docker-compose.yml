@@ -25,10 +25,16 @@ sonarqube:
    - sonardb
   environment:
    - SONARQUBE_JDBC_URL=jdbc:postgresql://sonardb:5432/sonar
-  volumes:
-   - ./sonarqube/extentions:/opt/sonarqube/extensions
-   - ./sonarqube/bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+  volumes_from:
+   - plugins
 
+plugins:
+  image: "sonarqube:5.4"
+  volumes:
+   - /opt/sonarqube/extensions
+   - /opt/sonarqube/lib/bundled-plugins
+  command: /bin/true
+  
 sonardb:
   image: postgres:9.1
   environment:
@@ -40,14 +46,14 @@ sonardb:
 gogs:
   image: gogs/gogs:0.9.13
   ports:
-   - 10080:3000
+   - 8084:3000
   links:
-   - dbgogs
+   - gogsdb
   volumes:
    - ./gogs/data:/data
 
 
-dbgogs:
+gogsdb:
   image: postgres:9.1
   environment:
    - POSTGRES_USER=gogs
@@ -58,8 +64,6 @@ dbgogs:
 mongodb:
   image: mongo:3.2.6
   command: mongod --smallfiles
-  ports:
-   - "27017:27017"
   volumes:
    - ./hygieia/mongo:/data/db
 
@@ -75,7 +79,7 @@ hygieia-api:
 hygieia-ui:
   image: capitalone/hygieia-ui:latest
   ports:
-  - "8088:80"
+  - "8085:80"
   links:
   - hygieia-api
 
