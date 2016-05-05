@@ -1,6 +1,7 @@
 import jenkins.model.*
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.nio.file.StandardCopyOption;
 import java.io.File
 
 File f = new File("/var/jenkins_home/.m2");
