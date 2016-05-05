@@ -6,6 +6,7 @@ jenkins:
   links:
    - sonarqube
    - nexus
+   - gogs
   volumes_from:
    - jenkinsdata
 
@@ -61,6 +62,36 @@ plugins:
    - /opt/sonarqube/lib/bundled-plugins
   command: /bin/true
 
+gogs:
+  image: gogs/gogs:0.9.13
+  ports:
+  - 10080:3000
+  links:
+  - dbgogs
+  volumes_from:
+  - gogsdata
+
+gogsdata:
+  image: gogs/gogs:0.9.13
+  volumes:
+  - /data
+  command: /bin/true
+
+
+dbgogs:
+  image: postgres:9.1
+  volumes_from:
+    - gogsdatadb
+  environment:
+   - POSTGRES_USER=gogs
+   - POSTGRES_PASSWORD=gogs
+
+gogsdatadb:
+  image: postgres:9.1
+  volumes:
+    - /var/lib/postgresql
+  command: /bin/true
+  
 mongodb:
   image: mongo:3.2.6
   command: mongod --smallfiles
@@ -75,7 +106,7 @@ hygieia-api:
   ports:
   - "8082:8080"
   volumes:
-  - ./logs:/hygieia/logs
+  - /hygieia/logs
   links:
   - mongodb:mongo
 
@@ -89,20 +120,15 @@ hygieia-ui:
 hygieia-github-scm-collector:
   image: capitalone/hygieia-github-scm-collector:latest
   volumes:
-  - ./logs:/hygieia/logs
+  - /hygieia/logs
   links:
   - mongodb:mongo
   - hygieia-api
-# place any values you want to change in docker-compose.override.yml
-#  environment:
-#  - GITHUB_HOST=github.com
-#  - GITHUB_CRON='0 0/5 * * * *'
-#  - GITHUB_COMMIT_THREASHOLD_DAYS=15  
 
 hygieia-jenkins-build-collector:
   image: capitalone/hygieia-jenkins-build-collector:latest
   volumes:
-  - ./logs:/hygieia/logs
+  - /hygieia/logs
   links:
   - mongodb:mongo
   - hygieia-api
@@ -113,7 +139,7 @@ hygieia-jenkins-build-collector:
 hygieia-sonar-codequality-collector:
   image: capitalone/hygieia-sonar-codequality-collector:latest
   volumes:
-  - ./logs:/hygieia/logs
+  - /hygieia/logs
   links:
   - mongodb:mongo
   - hygieia-api

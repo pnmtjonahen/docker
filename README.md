@@ -2,11 +2,18 @@ Docker
 =======
 All kind of docker files script and other related stuff.
 
-Note:
+Note1:
 A small note on running docker-compose, up and down are not complementary:
 * docker-compose up, to start the application;
 * docker-compose stop, to stop the application;
 * docker-compose down, to stop and remove all images, data volumes, etc, etc.
+
+Note2:
+Deleting untaged images
+```bash
+docker rmi $(docker images | grep '^<none>' | awk '{print $3}')
+```
+
 
 ABK
 ==
