@@ -4,22 +4,29 @@ import hudson.plugins.sonar.model.*
 
 def inst = Jenkins.getInstance()
 
-def desc = inst.getDescriptor("hudson.plugins.sonar.SonarPublisher")
+if (SonarInstallation.all().length != 0) {
+  println 'skip sonar installations'
+} else {
+  def desc = inst.getDescriptor("hudson.plugins.sonar.SonarPublisher")
+  
+  def sinst = new SonarInstallation(
+    "sonarqube",
+    false,
+    "http://sonarqube:9000",
+    "",
+    "",
+    "",
+    "3.0.1",
+    "",
+    new TriggersConfig(),
+    "",
+    "",
+    ""
+  )
+  
+  desc.setBuildWrapperEnabled(true)
+  
+  desc.setInstallations(sinst)
 
-def sinst = new SonarInstallation(
-  "sonarqube",
-  false,
-  "http://sonarqube:9000",
-  "",
-  "",
-  "",
-  "3.0.1",
-  "",
-  new TriggersConfig(),
-  "",
-  "",
-  ""
-)
-desc.setInstallations(sinst)
-
-desc.save()
+  desc.save()
+}
