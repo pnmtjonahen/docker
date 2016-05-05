@@ -1,7 +1,7 @@
 ![ci-logo.png](ci-logo.png)
 Docker
 =======
-All kind of docker files script and other related stuf
+Docker/Docker-compose, jenkins config and other scripts to get a working "Ontwikkel straat"
 
 CI
 ==

@@ -8,7 +8,7 @@ if (!f.exists()) {
   Files.createDirectory(f.toPath());
 }
 println 'copy settings.xml to .m2 folder'
-Files.copy(Paths.get("/usr/share/jenkins/m2/settings.xml"), Paths.get("/var/jenkins_home/.m2/settings.xml"));
+Files.copy(Paths.get("/usr/share/jenkins/m2/settings.xml"), Paths.get("/var/jenkins_home/.m2/settings.xml"), StandardCopyOption.REPLACE_EXISTING);
 
 a=Jenkins.instance.getExtensionList(hudson.tasks.Maven.DescriptorImpl.class)[0];
 b=(a.installations as List);
