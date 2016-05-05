@@ -4,26 +4,15 @@ gogs:
   - 10080:3000
   links:
   - dbgogs
-  volumes_from:
-  - gogsdata
-
-gogsdata:
-  image: gogs/gogs:0.9.13
   volumes:
-  - /data
-  command: /bin/true
+  - ./data:/data
 
 
 dbgogs:
   image: postgres:9.1
-  volumes_from:
-    - datadb
+  volumes:
+    - ./postgresql:/var/lib/postgresql
   environment:
    - POSTGRES_USER=gogs
    - POSTGRES_PASSWORD=gogs
 
-datadb:
-  image: postgres:9.1
-  volumes:
-    - /var/lib/postgresql
-  command: /bin/true
