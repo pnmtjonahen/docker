@@ -8,7 +8,8 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 \
     SONAR_RUNNER_VERSION=2.4 \
     SONAR_RUNNER_HOME=/usr/share/sonar-runner-${SONAR_RUNNER_VERSION} \
     MAVEN_VERSION=3.3.9 \
-    MAVEN_HOME=/usr/share/maven
+    MAVEN_HOME=/usr/share/maven\
+    JENKINS_OPTS="--httpPort=8081"
 
 # update jaxp properties to allow xsd from file system
 COPY jaxp.properties $JAVA_HOME/jre/lib
@@ -37,4 +38,5 @@ RUN wget http://repo1.maven.org/maven2/org/codehaus/sonar/runner/sonar-runner-di
  && rm sonar-runner-dist-${SONAR_RUNNER_VERSION}.zip
 
 USER jenkins
+EXPOSE 8081
 
