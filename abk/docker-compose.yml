@@ -1,3 +1,8 @@
+swagger:
+  image: tjonahen/swagger
+  ports:
+  - "8087:80"
+
 abk-client:
   image: tjonahen/abk-client:latest
   ports:
@@ -22,7 +27,7 @@ abk-accounts:
   environment:
    - DATABASE_UNIT=abk
    - DATABASE_URL=jdbc:derby://derbydb:1527/abk
-   
+
 abk-costcenters:
   image: tjonahen/abk-costcenters:latest
   ports:
@@ -32,7 +37,7 @@ abk-costcenters:
   environment:
    - DATABASE_UNIT=abk
    - DATABASE_URL=jdbc:derby://derbydb:1527/abk
-   
+
 abk-transactions:
   image: tjonahen/abk-transactions:latest
   ports:
@@ -42,7 +47,7 @@ abk-transactions:
   environment:
    - DATABASE_UNIT=abk
    - DATABASE_URL=jdbc:derby://derbydb:1527/abk
-   
+
 abk-upload:
   image: tjonahen/abk-upload:latest
   ports:
@@ -52,7 +57,7 @@ abk-upload:
   environment:
    - DATABASE_UNIT=abk
    - DATABASE_URL=jdbc:derby://derbydb:1527/abk
-   
+
 derbydb:
   image: tjonahen/derbydb:latest
   volumes:

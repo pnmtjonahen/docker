@@ -1,0 +1,7 @@
+scooch:
+  image: ivonet/scooch
+  container_name: scooch
+  ports:
+  - "10080:3000"
+  volumes:
+  - ./slides:/slides

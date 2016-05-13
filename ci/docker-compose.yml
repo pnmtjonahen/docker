@@ -1,5 +1,6 @@
 jenkins:
   image: tjonahen/jenkins:latest
+  container_name: jenkins
   ports:
    - "8081:8081"
    - "50000:50000"
@@ -12,6 +13,7 @@ jenkins:
 
 nexus:
   image: sonatype/nexus3:latest
+  container_name: nexus
   ports:
    - "8083:8081"
   volumes:
@@ -19,6 +21,7 @@ nexus:
 
 sonarqube:
   image: sonarqube:5.4
+  container_name: sonarqube
   ports:
    - "9000:9000"
   links:
@@ -30,6 +33,7 @@ sonarqube:
 
 plugins:
   image: "sonarqube:5.4"
+  container_name: plugins
   volumes:
    - /opt/sonarqube/extensions
    - /opt/sonarqube/lib/bundled-plugins
@@ -37,6 +41,7 @@ plugins:
   
 sonardb:
   image: postgres:9.1
+  container_name: sonardb
   environment:
    - POSTGRES_USER=sonar
    - POSTGRES_PASSWORD=sonar
@@ -45,6 +50,7 @@ sonardb:
 
 gogs:
   image: gogs/gogs:0.9.13
+  container_name: gogs
   ports:
    - 8084:3000
   links:
@@ -55,6 +61,7 @@ gogs:
 
 gogsdb:
   image: postgres:9.1
+  container_name: gogsdb
   environment:
    - POSTGRES_USER=gogs
    - POSTGRES_PASSWORD=gogs
@@ -63,12 +70,14 @@ gogsdb:
 
 mongodb:
   image: mongo:3.2.6
+  container_name: mongodb
   command: mongod --smallfiles
   volumes:
    - ./hygieia/mongo:/data/db
 
 hygieia-api:
   image: capitalone/hygieia-api:latest
+  container_name: hygieia-api
   ports:
    - "8082:8080"
   volumes:
@@ -78,21 +87,34 @@ hygieia-api:
 
 hygieia-ui:
   image: capitalone/hygieia-ui:latest
+  container_name: hygieia-ui
   ports:
   - "8085:80"
   links:
   - hygieia-api
 
+hygieia-gogs-scm-collector:
+  image: hygieia-gogs-scm-collector:latest
+  container_name: hygieia-gogs-scm-collector
+  volumes:
+  - ./hygieia/logs:/hygieia/logs
+  links:
+  - mongodb:mongo
+  - hygieia-api
+  
 hygieia-github-scm-collector:
   image: capitalone/hygieia-github-scm-collector:latest
+  container_name: hygieia-github-scm-collector
   volumes:
   - ./hygieia/logs:/hygieia/logs
   links:
   - mongodb:mongo
   - hygieia-api
 
+
 hygieia-jenkins-build-collector:
   image: capitalone/hygieia-jenkins-build-collector:latest
+  container_name: hygieia-jenkins-build-collector
   volumes:
   - ./hygieia/logs:/hygieia/logs
   links:
@@ -104,6 +126,7 @@ hygieia-jenkins-build-collector:
 
 hygieia-sonar-codequality-collector:
   image: capitalone/hygieia-sonar-codequality-collector:latest
+  container_name: hygieia-sonar-codequality-collector
   volumes:
   - ./hygieia/logs:/hygieia/logs
   links:
