@@ -2,7 +2,20 @@ swagger:
   image: tjonahen/swagger
   ports:
   - "8087:80"
-
+  
+abk-httpd:
+  image: tjonahen/abk-httpd:latest
+  ports:
+  - "8888:80"
+  links:
+  - abk-user
+  - abk-admin
+  - abk-accounts
+  - abk-costcenters
+  - abk-transactions
+  - abk-upload
+  - abk-client
+  
 abk-client:
   image: tjonahen/abk-client:latest
   ports:
@@ -58,8 +71,20 @@ abk-upload:
    - DATABASE_UNIT=abk
    - DATABASE_URL=jdbc:derby://derbydb:1527/abk
 
+abk-user:
+  image: tjonahen/abk-user:latest
+  ports:
+   - "3005:80"
+  links:
+   - derbydb
+  environment:
+   - DATABASE_UNIT=abk
+   - DATABASE_URL=jdbc:derby://derbydb:1527/abk
+
 derbydb:
   image: tjonahen/derbydb:latest
+  ports:
+  - "1527:1527"
   volumes:
     - ./abk-data:/dbs
 

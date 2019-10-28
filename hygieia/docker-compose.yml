@@ -1,59 +1,67 @@
-mongodb:
-  image: mongo:3.2.6
-  container_name: hygieia_mongodb
-  command: mongod --smallfiles
-  ports:
-   - "27017:27017"
-  volumes:
-   - ./mongo:/data/db:rw
-  volume_driver: local
+version: "3.5"
+services:
+  mongodb:
+    image: mongo:3.2.6
+    container_name: hygieia_mongodb
+    command: mongod --smallfiles
+    ports:
+     - "27017:27017"
+    volumes:
+     - mongo_data:/data/db:rw
 
-hygieia-api:
-  image: hygieia-api:latest
-  container_name: hygieia_hygieia-api
-  ports:
-  - "8082:8080"
-  volumes:
-  - ./logs:/hygieia/logs
-  links:
-  - mongodb:mongo
+  hygieia-api:
+    image: hygieia-api:latest
+    container_name: hygieia_hygieia-api
+    ports:
+    - "8082:8080"
+    volumes:
+    - ./logs:/hygieia/logs
+    links:
+    - mongodb:mongo
 
-hygieia-ui:
-  image: hygieia-ui:latest
-  container_name: hygieia_hygieia-ui
-  ports:
-  - "8088:80"
-  links:
-  - hygieia-api
-  
-hygieia-jenkins-build-collector:
-  image: hygieia-jenkins-build-collector:latest
-  container_name: hygieia_hygieia-jenkins-build
-  volumes:
-  - ./logs:/hygieia/logs
-  links:
-  - mongodb:mongo
-  - hygieia-api
-  environment:
-  - JENKINS_MASTER=http://jenkins:8081
+  hygieia-ui:
+    image: hygieia-ui:latest
+    container_name: hygieia_hygieia-ui
+    ports:
+    - "8088:80"
+    links:
+    - hygieia-api
 
-hygieia-sonar-codequality-collector:
-  image: hygieia-sonar-codequality-collector:latest
-  container_name: hygieia_hygieia-sonar-codequality
-  volumes:
-  - ./logs:/hygieia/logs
-  links:
-  - mongodb:mongo
-  - hygieia-api
-  environment:
-  - SONAR_URL=http://sonarqube:9000
+  hygieia-jenkins-build-collector:
+    image: hygieia-jenkins-build-collector:latest
+    container_name: hygieia_hygieia-jenkins-build
+    volumes:
+    - ./logs:/hygieia/logs
+    links:
+    - mongodb:mongo
+    - hygieia-api
+    environment:
+    - JENKINS_MASTER=http://jenkins:8081
 
-hygieia-gogs-scm-collector:
-  image: hygieia-gogs-scm-collector:latest
-  container_name: hygieia_hygieia-gogs-scm-collector
-  volumes:
-  - ./hygieia/logs:/hygieia/logs
-  links:
-  - mongodb:mongo
-  - hygieia-api
-  
+  hygieia-sonar-codequality-collector:
+    image: hygieia-sonar-codequality-collector:latest
+    container_name: hygieia_hygieia-sonar-codequality
+    volumes:
+    - ./logs:/hygieia/logs
+    links:
+    - mongodb:mongo
+    - hygieia-api
+    environment:
+    - SONAR_URL=http://sonarqube:9000
+
+  hygieia-gogs-scm-collector:
+    image: hygieia-gogs-scm-collector:latest
+    container_name: hygieia_hygieia-gogs-scm-collector
+    volumes:
+    - ./hygieia/logs:/hygieia/logs
+    links:
+    - mongodb:mongo
+    - hygieia-api
+
+volumes:
+  mongo_data:
+
+networks:
+  default:
+    external:
+      name: local-sb-network
