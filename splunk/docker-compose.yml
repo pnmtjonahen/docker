@@ -1,0 +1,37 @@
+version: "3.5"
+services:
+
+  splunk:
+    image: splunk/splunk
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_PASSWORD=admin1234
+    ports:
+      - "8000:8000"
+    volumes:
+      - vsplunk
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    restart: unless-stopped
+
+  vsplunk:
+    image: busybox
+    volumes:
+      - /opt/splunk/etc
+      - /opt/splunk/var
+
+  splunkforwarder:
+    image: splunk/universalforwarder
+    environment:
+     - SPLUNK_START_ARGS=--accept-license
+     - SPLUNK_PASSWORD=admin1234
+    volumes:
+     - /tmp/logs:/logs
+     - "/etc/timezone:/etc/timezone:ro"
+     - "/etc/localtime:/etc/localtime:ro"
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: local-sb-network
