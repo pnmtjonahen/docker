@@ -1,0 +1,18 @@
+tjonahen.home.        IN  SOA dns.tjonahen.pnm.nl. philippe.tjonahen.pnm.nl. 2015082541 7200 3600 1209600 3600
+
+ptj-ixtreme-M3720.tjonahen.home.   IN A 192.168.178.203
+
+gitlab.tjonahen.home.              IN CNAME ptj-ixtreme-M3720.tjonahen.home.
+sonar.tjonahen.home.               IN CNAME ptj-ixtreme-M3720.tjonahen.home. 
+registry.tjonahen.home.            IN CNAME ptj-ixtreme-M3720.tjonahen.home.
+abk.tjonahen.home.                 IN CNAME ptj-ixtreme-M3720.tjonahen.home.
+database.tjonahen.home.            IN CNAME ptj-ixtreme-M3720.tjonahen.home.
+
+master.tjonahen.home.              IN A 192.168.178.230
+node0.tjonahen.home.               IN A 192.168.178.240
+node1.tjonahen.home.               IN A 192.168.178.241
+node2.tjonahen.home.               IN A 192.168.178.242
+node3.tjonahen.home.               IN A 192.168.178.243
+node4.tjonahen.home.               IN A 192.168.178.244
+node5.tjonahen.home.               IN A 192.168.178.245
+

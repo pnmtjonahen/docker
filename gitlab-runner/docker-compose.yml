@@ -1,0 +1,14 @@
+version: "3.5"
+services:
+  runner:
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    volumes:
+     - '$SRV_HOME/gitlab-runner/config:/etc/gitlab-runner'
+     - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  default:
+    external:
+      name: local-sb-network
+

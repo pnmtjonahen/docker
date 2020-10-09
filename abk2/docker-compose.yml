@@ -1,0 +1,201 @@
+version: "3.5"
+services:
+  derbydb:
+    image: localhost:5000/tjonahen/abk-derbydb:latest
+    restart: unless-stopped
+    ports:
+      - 1521:1521
+    environment:
+      - SERVER_PORT=1521
+    volumes:
+      - ./abk-data:/dbs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+#  abk-admin:
+#    image:  localhost:5000/tjonahen/abk2-admin:latest
+#    restart: unless-stopped
+#    ports:
+#     - 3000:8080
+#     - 9190:9090
+#    links:
+#     - derbydb
+#    environment:
+#     - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-admin-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+#     - spring.jpa.generate-ddl=false
+#     - spring.jpa.hibernate.ddl-auto=none
+#     - spring.datasource.url=jdbc:derby://derbydb:1521/abk
+#     - spring.datasource.driver-class-name=org.apache.derby.jdbc.ClientDriver
+#     - spring.datasource.username=abk
+#     - spring.datasource.password=abk
+#     - eureka.client.serviceUrl.defaultZone=http://eurekaserver/eureka/
+#     - spring.sleuth.sampler.percentage=1.0
+#     - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
+#     - spring.zipkin.sender.type=web
+#     - LOGGING_FILE=/logs/abk-admin.log
+#    volumes:
+#     - ./logs:/logs
+#     - /etc/timezone:/etc/timezone:ro
+#     - /etc/localtime:/etc/localtime:ro
+
+#  abk-accounts:
+#    image:  localhost:5000/tjonahen/abk2-accounts:latest
+#    restart: unless-stopped
+#    ports:
+#     - 3001:8080
+#     - 9191:9090
+#    links:
+#     - derbydb
+#    environment:
+#     - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-accounts-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+#     - spring.jpa.generate-ddl=false
+#     - spring.jpa.hibernate.ddl-auto=none
+#     - spring.datasource.url=jdbc:derby://derbydb:1521/abk
+#     - spring.datasource.driver-class-name=org.apache.derby.jdbc.ClientDriver
+#     - spring.datasource.username=abk
+#     - spring.datasource.password=abk
+#     - eureka.client.serviceUrl.defaultZone=http://eurekaserver/eureka/
+#     - spring.sleuth.sampler.percentage=1.0
+#     - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
+#     - spring.zipkin.sender.type=web
+#     - LOGGING_FILE=/logs/abk-accounts.log
+#    volumes:
+#     - ./logs:/logs
+#     - /etc/timezone:/etc/timezone:ro
+#     - /etc/localtime:/etc/localtime:ro
+
+  abk-costcenters:
+    image:  localhost:5000/tjonahen/abk2-costcenters:latest
+    restart: unless-stopped
+    ports:
+     - 3002:3002
+     - 9192:9090
+    links:
+     - derbydb
+    environment:
+     - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-costcenters-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+     - spring.jpa.generate-ddl=false
+     - spring.jpa.hibernate.ddl-auto=none
+     - spring.datasource.url=jdbc:derby://derbydb:1521/abk
+     - spring.datasource.driver-class-name=org.apache.derby.jdbc.ClientDriver
+     - spring.datasource.username=abk
+     - spring.datasource.password=abk
+     - eureka.client.serviceUrl.defaultZone=http://eurekaserver/eureka/
+     - spring.sleuth.sampler.percentage=1.0
+     - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
+     - spring.zipkin.sender.type=web
+     - server.port=3002
+     - LOGGING_FILE=/logs/abk-costcenters.log
+    volumes:
+     - ./logs:/logs
+     - /etc/timezone:/etc/timezone:ro
+     - /etc/localtime:/etc/localtime:ro
+
+  abk-transactions:
+    image:  localhost:5000/tjonahen/abk2-transacties:latest
+    restart: unless-stopped
+    ports:
+     - 3003:3003
+     - 9193:9090
+    links:
+     - derbydb
+    environment:
+     - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-transacties-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+     - spring.jpa.generate-ddl=false
+     - spring.jpa.hibernate.ddl-auto=none
+     - spring.datasource.url=jdbc:derby://derbydb:1521/abk
+     - spring.datasource.driver-class-name=org.apache.derby.jdbc.ClientDriver
+     - spring.datasource.username=abk
+     - spring.datasource.password=abk
+     - eureka.client.serviceUrl.defaultZone=http://eurekaserver/eureka/
+     - spring.sleuth.sampler.percentage=1.0
+     - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
+     - spring.zipkin.sender.type=web
+     - server.port=3003
+     - hibernate.generate_statistics=true
+     - LOGGING_FILE=/logs/abk-transacties.log
+    volumes:
+     - ./logs:/logs
+     - /etc/timezone:/etc/timezone:ro
+     - /etc/localtime:/etc/localtime:ro
+
+  abk-upload:
+    image:  localhost:5000/tjonahen/abk2-upload:latest
+    restart: unless-stopped
+    ports:
+     - 3004:3004
+     - 9194:9090
+    links:
+     - derbydb
+    environment:
+     - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-upload-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+     - spring.jpa.generate-ddl=false
+     - spring.jpa.hibernate.ddl-auto=none
+     - spring.datasource.url=jdbc:derby://derbydb:1521/abk
+     - spring.datasource.driver-class-name=org.apache.derby.jdbc.ClientDriver
+     - spring.datasource.username=abk
+     - spring.datasource.password=abk
+     - eureka.client.serviceUrl.defaultZone=http://eurekaserver/eureka/
+     - spring.sleuth.sampler.percentage=1.0
+     - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
+     - spring.zipkin.sender.type=web
+     - server.port=3004
+     - LOGGING_FILE=/logs/abk-upload.log
+    volumes:
+     - ./logs:/logs
+     - /etc/timezone:/etc/timezone:ro
+     - /etc/localtime:/etc/localtime:ro
+
+#  abk-user:
+#    image:  localhost:5000/tjonahen/abk2-user:latest
+#    restart: unless-stopped
+#    ports:
+#     - 3005:8080
+#     - 9195:9090
+#    links:
+#     - derbydb
+#    environment:
+#     - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-user-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+#     - spring.jpa.generate-ddl=false
+#     - spring.jpa.hibernate.ddl-auto=none
+#     - spring.datasource.url=jdbc:derby://derbydb:1521/abk
+#     - spring.datasource.driver-class-name=org.apache.derby.jdbc.ClientDriver
+#     - spring.datasource.username=abk
+#     - spring.datasource.password=abk
+#     - eureka.client.serviceUrl.defaultZone=http://eurekaserver/eureka/
+#     - spring.sleuth.sampler.percentage=1.0
+#     - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
+#     - spring.zipkin.sender.type=web
+#     - LOGGING_FILE=/logs/abk-user.log
+#    volumes:
+#     - vlogs:/logs
+#     - /etc/timezone:/etc/timezone:ro
+#     - /etc/localtime:/etc/localtime:ro
+
+  abk-client:
+     image: localhost:5000/tjonahen/abk2-client:latest
+     ports:
+       - 3006:80
+     links:
+       - "abk-upload:upload.abk.tjonahen.home"
+       - "abk-transactions:transacties.abk.tjonahen.home"
+       - "abk-costcenters:costcenters.abk.tjonahen.home"
+
+
+#  splunkforwarder:
+#    image: splunk/universalforwarder
+#    environment:
+#     - SPLUNK_START_ARGS=--accept-license
+#     - SPLUNK_PASSWORD=admin1234
+#    volumes:
+#     - ./logs:/logs
+#     - /etc/timezone:/etc/timezone:ro
+#     - /etc/localtime:/etc/localtime:ro
+
+volumes:
+  vlogs:
+
+networks:
+  default:
+    external:
+      name: local-sb-network
