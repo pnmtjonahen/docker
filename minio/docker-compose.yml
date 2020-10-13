@@ -1,0 +1,26 @@
+version: "3.5"
+services:
+  web:
+    image: minio/minio:latest
+    command: ["server", "/export"]
+    restart: always
+    hostname: minio
+    domainname: tjonahen.home
+    environment:
+      - MINIO_ACCESS_KEY=minio
+      - MINIO_SECRET_KEY=minio1234
+    ports:
+      - '9005:9000'
+    volumes:
+      - '$SRV_HOME/minio/minio:/root/.minio'
+      - '$SRV_HOME/minio/export:/export'
+    networks:
+      default:
+        aliases:
+         - minio.tjonahen.home
+
+networks:
+  default:
+    external:
+       name: local-sb-network
+
