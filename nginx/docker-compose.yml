@@ -8,8 +8,4 @@ services:
      - ./nginx/pid:/var/run
      - ./nginx/conf:/etc/nginx
      - ./nginx/content:/usr/share/nginx/html:ro
-    ports:
-     - "80:80"
-    environment:
-     - NGINX_ENTRYPOINT_QUIET_LOGS=1
     network_mode: host
