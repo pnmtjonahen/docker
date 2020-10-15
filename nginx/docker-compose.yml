@@ -12,3 +12,4 @@ services:
      - "80:80"
     environment:
      - NGINX_ENTRYPOINT_QUIET_LOGS=1
+    network_mode: host
