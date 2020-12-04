@@ -16,28 +16,28 @@ services:
     image: localhost:5000/tjonahen/abk2-accounts:latest
     restart: unless-stopped
     ports:
-     - 3001:3001
-     - 9191:9090
+      - 3001:3001
+      - 9191:9090
     links:
-     - derbydb
+      - derbydb
     environment:
-     - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-accounts-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
-     - spring.jpa.generate-ddl=false
-     - spring.jpa.hibernate.ddl-auto=none
-     - spring.datasource.url=jdbc:derby://derbydb:1521/abk
-     - spring.datasource.driver-class-name=org.apache.derby.jdbc.ClientDriver
-     - spring.datasource.username=abk
-     - spring.datasource.password=abk
-     - eureka.client.serviceUrl.defaultZone=http://eurekaserver/eureka/
-     - spring.sleuth.sampler.percentage=1.0
-     - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
-     - spring.zipkin.sender.type=web
-     - server.port=3001
-     - LOGGING_FILE=/logs/abk-accounts.log
+      - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-accounts-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+      - spring.jpa.generate-ddl=false
+      - spring.jpa.hibernate.ddl-auto=none
+      - spring.datasource.url=jdbc:derby://derbydb:1521/abk
+      - spring.datasource.driver-class-name=org.apache.derby.jdbc.ClientDriver
+      - spring.datasource.username=abk
+      - spring.datasource.password=abk
+      - eureka.client.serviceUrl.defaultZone=http://eurekaserver/eureka/
+      - spring.sleuth.sampler.percentage=1.0
+      - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
+      - spring.zipkin.sender.type=web
+      - server.port=3001
+      - LOGGING_FILE=/logs/abk-accounts.log
     volumes:
-     - ./logs:/logs
-     - /etc/timezone:/etc/timezone:ro
-     - /etc/localtime:/etc/localtime:ro
+      - ./logs:/logs
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
 
   abk-costcenters:
     image:  localhost:5000/tjonahen/abk2-costcenters:latest
@@ -122,18 +122,18 @@ services:
      - /etc/localtime:/etc/localtime:ro
 
   abk-client:
-     image: localhost:5000/tjonahen/abk2-client:latest
-     ports:
-       - 3006:80
-     links:
-       - "abk-upload:upload.abk.tjonahen.home"
-       - "abk-transactions:transacties.abk.tjonahen.home"
-       - "abk-costcenters:costcenters.abk.tjonahen.home"
+    image: localhost:5000/tjonahen/abk2-client:latest
+    ports:
+     - 3006:80
+    links:
+     - "abk-upload:upload.abk.tjonahen.home"
+     - "abk-transactions:transacties.abk.tjonahen.home"
+     - "abk-costcenters:costcenters.abk.tjonahen.home"
     environment:
-       - NGINX_ENTRYPOINT_QUIET_LOGS=1
+     - NGINX_ENTRYPOINT_QUIET_LOGS=1
     volumes:
-      - ./nginx-cache:/var/cache/nginx
-      - ./nginx-pid:/var/run
+     - ./nginx-cache:/var/cache/nginx
+     - ./nginx-pid:/var/run
 
 volumes:
   vlogs:
