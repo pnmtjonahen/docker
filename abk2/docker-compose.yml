@@ -33,7 +33,7 @@ services:
       - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
       - spring.zipkin.sender.type=web
       - server.port=3001
-      - LOGGING_FILE=/logs/abk-accounts.log
+      - logging.file=/logs/abk-accounts.log
     volumes:
       - ./logs:/logs
       - /etc/timezone:/etc/timezone:ro
@@ -60,7 +60,7 @@ services:
       - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
       - spring.zipkin.sender.type=web
       - server.port=3002
-      - LOGGING_FILE=/logs/abk-costcenters.log
+      - logging.file=/logs/abk-costcenters.log
     volumes:
       - ./logs:/logs
       - /etc/timezone:/etc/timezone:ro
@@ -88,7 +88,7 @@ services:
       - spring.zipkin.sender.type=web
       - server.port=3003
       - hibernate.generate_statistics=true
-      - LOGGING_FILE=/logs/abk-transacties.log
+      - logging.file=/logs/abk-transacties.log
     volumes:
       - ./logs:/logs
       - /etc/timezone:/etc/timezone:ro
@@ -115,7 +115,7 @@ services:
       - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
       - spring.zipkin.sender.type=web
       - server.port=3004
-      - LOGGING_FILE=/logs/abk-upload.log
+      - logging.file=/logs/abk-upload.log
     volumes:
       - ./logs:/logs
       - /etc/timezone:/etc/timezone:ro
