@@ -1,11 +1,5 @@
 version: "3.5"
 services:
-#  rabbitmq:
-#    image: rabbitmq:management
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-#    restart: unless-stopped
 
   configserver:
     image: localhost:5000/tjonahen/configserver
@@ -36,16 +30,21 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
     restart: unless-stopped
 
-#  splunkforwarder:
-#    image: splunk/universalforwarder
-#    environment:
-#      - SPLUNK_START_ARGS=--accept-license
-#      - SPLUNK_PASSWORD=admin1234
-#    volumes:
-#      - vlogs:/logs
-#      - "/etc/timezone:/etc/timezone:ro"
-#      - "/etc/localtime:/etc/localtime:ro"
-#    restart: unless-stopped
+  zipkinserver:
+    image: localhost:5000/tjonahen/zipkinserver
+    environment:
+      - PROGRAM_OPTS=-Xlog:gc*:file=/logs/eureka-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+      - LOGGING_FILE=/logs/application-zipkin.log
+      - eureka.client.serviceUrl.defaultZone=http://eurekaserver/eureka/
+    ports:
+      - "9411:9411"
+      - "9762:9090"
+    volumes:
+      - vlogs:/logs
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    restart: unless-stopped
+
 
 volumes:
   vlogs:
