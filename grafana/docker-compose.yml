@@ -1,0 +1,14 @@
+version: "3.5"
+services:
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3009:3000
+    environment:
+    volumes:
+      - ./data:/var/lib/grafana
+
+networks:
+  default:
+    external:
+      name: local-sb-network
