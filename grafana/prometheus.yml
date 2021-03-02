@@ -11,9 +11,26 @@ rule_files:
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
+  - job_name: 'abk-accounts'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['abk-accounts:3001']
+
+  - job_name: 'abk-costcenters'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['abk-costcenters:3002']
 
   - job_name: 'abk-transactions'
     metrics_path: '/actuator/prometheus'
     scrape_interval: 5s
     static_configs:
     - targets: ['abk-transactions:3003']
+
+  - job_name: 'abk-upload'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['abk-upload:3004']
