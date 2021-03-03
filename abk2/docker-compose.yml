@@ -17,11 +17,11 @@ services:
     restart: unless-stopped
     ports:
       - 3001:3001
-      - 9191:9090
+#      - 9191:9090
     links:
       - derbydb
     environment:
-      - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-accounts-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+#      - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-accounts-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
       - spring.jpa.generate-ddl=false
       - spring.jpa.hibernate.ddl-auto=none
       - spring.datasource.url=jdbc:derby://derbydb:1521/abk
@@ -33,7 +33,7 @@ services:
       - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
       - spring.zipkin.sender.type=web
       - server.port=3001
-      - logging.file=/logs/abk-accounts.log
+      - logging.file.name=/logs/abk-accounts.log
     volumes:
       - ./logs:/logs
       - /etc/timezone:/etc/timezone:ro
@@ -44,11 +44,11 @@ services:
     restart: unless-stopped
     ports:
       - 3002:3002
-      - 9192:9090
+#      - 9192:9090
     links:
       - derbydb
     environment:
-      - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-costcenters-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+#      - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-costcenters-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
       - spring.jpa.generate-ddl=false
       - spring.jpa.hibernate.ddl-auto=none
       - spring.datasource.url=jdbc:derby://derbydb:1521/abk
@@ -60,7 +60,7 @@ services:
       - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
       - spring.zipkin.sender.type=web
       - server.port=3002
-      - logging.file=/logs/abk-costcenters.log
+      - logging.file.name=/logs/abk-costcenters.log
     volumes:
       - ./logs:/logs
       - /etc/timezone:/etc/timezone:ro
@@ -71,11 +71,11 @@ services:
     restart: unless-stopped
     ports:
       - 3003:3003
-      - 9193:9090
+#      - 9193:9090
     links:
       - derbydb
     environment:
-      - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-transacties-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+#      - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-transacties-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
       - spring.jpa.generate-ddl=false
       - spring.jpa.hibernate.ddl-auto=none
       - spring.datasource.url=jdbc:derby://derbydb:1521/abk
@@ -88,7 +88,7 @@ services:
       - spring.zipkin.sender.type=web
       - server.port=3003
       - hibernate.generate_statistics=true
-      - logging.file=/logs/abk-transacties.log
+      - logging.file.name=/logs/abk-transacties.log
     volumes:
       - ./logs:/logs
       - /etc/timezone:/etc/timezone:ro
@@ -99,12 +99,12 @@ services:
     restart: unless-stopped
     ports:
       - 3004:3004
-      - 9194:9090
+#      - 9194:9090
     links:
       - abk-accounts
       - abk-transactions
     environment:
-      - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-upload-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
+#      - PROGRAM_OPTS=-Xlog:gc*:file=/logs/abk-upload-gc.log -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.local.only=false
       - upload.rekening_url=http://abk-accounts:3001/accounts
       - upload.transactions_url=http://abk-transactions:3003/transactions
       - eureka.client.serviceUrl.defaultZone=http://eurekaserver/eureka/
@@ -112,7 +112,7 @@ services:
       - spring.zipkin.baseUrl=http://ZIPKIN-SERVER:9411/
       - spring.zipkin.sender.type=web
       - server.port=3004
-      - logging.file=/logs/abk-upload.log
+      - logging.file.name=/logs/abk-upload.log
     volumes:
       - ./logs:/logs
       - /etc/timezone:/etc/timezone:ro
