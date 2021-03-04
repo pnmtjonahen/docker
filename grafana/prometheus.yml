@@ -34,3 +34,15 @@ scrape_configs:
     # scrape_interval: 60s
     static_configs:
     - targets: ['abk-upload:3004']
+
+  - job_name: 'configserver'
+    metrics_path: '/actuator/prometheus'
+    # scrape_interval: 60s
+    static_configs:
+    - targets: ['configserver']
+
+  - job_name: 'eurekaserver'
+    metrics_path: '/actuator/prometheus'
+    # scrape_interval: 60s
+    static_configs:
+    - targets: ['eurekaserver:9411']
