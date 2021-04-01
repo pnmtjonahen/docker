@@ -127,6 +127,7 @@ services:
     ports:
       - 3006:80
     links:
+      - "abk-accounts:accounts.abk.tjonahen.home"
       - "abk-upload:upload.abk.tjonahen.home"
       - "abk-transactions:transacties.abk.tjonahen.home"
       - "abk-costcenters:costcenters.abk.tjonahen.home"
