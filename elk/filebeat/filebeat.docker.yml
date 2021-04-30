@@ -3,6 +3,13 @@ filebeat.config:
     path: ${path.config}/modules.d/*.yml
     reload.enabled: false
 
+filebeat.modules:
+  - module: iptables
+    log:
+      enabled: true
+      var.paths: ["/var/log/host-iptables.log"]
+      var.input: "file"
+
 filebeat.autodiscover:
   providers:
     - type: docker
