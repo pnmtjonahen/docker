@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: abk-costcenters-service
+  name: abk-costcenters-service
+  namespace: abk
+spec:
+  type: ClusterIP
+  ports:
+  - name: abk-costcenters-ports
+    port: 3002
+  selector:
+    type: abk-costcenters-backend

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: abk
+  labels:
+    type: abk-client-backend
+  name: abk-client-service
+spec:
+  ports:
+  - port: 3006
+    protocol: TCP
+    targetPort: 80
+  selector:
+    type: abk-client-backend
+status:
+  loadBalancer: {}

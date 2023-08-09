@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abk-costcenters
+  namespace: abk
+  labels:
+    type: abk-costcenters-backend
+spec:
+  template:
+    metadata:
+      name: abk-costcenters-pod
+      labels:
+        type: abk-costcenters-backend
+    spec:
+      containers:
+        - name: abk-costcenters
+          image: registry.tjonahen.home:5000/tjonahen/abk2-costcenters
+          ports:
+            - containerPort: 3002
+          env:
+          - name: spring.datasource.url
+            valueFrom:
+              configMapKeyRef:
+                name: abk-config-map
+                key: DATABASE_URL
+          - name: spring.datasource.driver-class-name
+            value: org.apache.derby.jdbc.ClientDriver
+          - name: spring.datasource.username
+            valueFrom:
+              configMapKeyRef:
+                name: abk-config-map
+                key: DATABASE_USER
+          - name: spring.datasource.password
+            valueFrom:
+              secretKeyRef:
+                name: abk-secret
+                key: DATABASE_PASSWORD
+          - name: server.port
+            value: "3002"
+  replicas: 1
+  selector:
+    matchLabels:
+      type: abk-costcenters-backend

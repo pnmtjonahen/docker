@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abk-transactions
+  namespace: abk
+  labels:
+    type: abk-transactions-backend
+spec:
+  template:
+    metadata:
+      name: abk-transactions-pod
+      labels:
+        type: abk-transactions-backend
+
+    spec:
+      containers:
+        - name: abk-transactions
+          image: registry.tjonahen.home:5000/tjonahen/abk2-transacties
+          ports:
+            - containerPort: 3003
+          env:
+          - name: spring.datasource.url
+            valueFrom:
+              configMapKeyRef:
+                name: abk-config-map
+                key: DATABASE_URL
+          - name: spring.datasource.driver-class-name
+            value: org.apache.derby.jdbc.ClientDriver
+          - name: spring.datasource.username
+            valueFrom:
+              configMapKeyRef:
+                name: abk-config-map
+                key: DATABASE_USER
+          - name: spring.datasource.password
+            valueFrom:
+              secretKeyRef:
+                name: abk-secret
+                key: DATABASE_PASSWORD
+          - name: server.port
+            value: "3003"
+  replicas: 1
+  selector:
+    matchLabels:
+      type: abk-transactions-backend

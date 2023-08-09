@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: abk-upload-service
+  name: abk-upload-service
+  namespace: abk
+spec:
+  type: ClusterIP
+  ports:
+  - name: abk-upload-ports
+    port: 3004
+  selector:
+    type: abk-upload-backend

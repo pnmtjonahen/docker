@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abk-upload
+  namespace: abk
+  labels:
+    type: abk-upload-backend
+spec:
+  template:
+    metadata:
+      name: abk-upload-pod
+      labels:
+        type: abk-upload-backend
+    spec:
+      containers:
+        - name: abk-upload
+          image: registry.tjonahen.home:5000/tjonahen/abk2-upload
+          ports:
+            - containerPort: 3004
+          env:
+          - name: server.port
+            value: "3004"
+          - name: upload.rekening_url
+            value: http://abk-accounts:3001/accounts
+          - name: upload.transactions_url
+            value: http://abk-accounts:3003/transactions
+
+  replicas: 1
+  selector:
+    matchLabels:
+      type: abk-upload-backend

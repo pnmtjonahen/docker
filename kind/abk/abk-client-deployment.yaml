@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abk-client
+  namespace: abk
+  labels:
+    type: abk-client-backend
+spec:
+  template:
+    metadata:
+      name: abk-client-pod
+      namespace: abk
+      labels:
+        type: abk-client-backend
+    spec:
+      containers:
+        - name: abk-client
+          image: registry.tjonahen.home:5000/tjonahen/abk2-client
+  replicas: 1
+  selector:
+    matchLabels:
+      type: abk-client-backend
