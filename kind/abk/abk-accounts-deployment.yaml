@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: abk-accounts
-          image: registry.tjonahen.home:5000/tjonahen/abk2-accounts
+          image: registry.tjonahen.home:5000/tjonahen/abk2-accounts:2.6.1
           ports:
             - containerPort: 3001
           env:
